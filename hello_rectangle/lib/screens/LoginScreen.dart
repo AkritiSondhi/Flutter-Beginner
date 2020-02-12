@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   bool isCheckBoxChecked = false;
-  String emailText, passwordString;
+  String emailText, passwordText;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +57,9 @@ class LoginScreenState extends State<LoginScreen> {
                           backgroundColor: Colors.transparent,
                         ),
                       ),
+                      onChanged: (text) {
+                        emailText = text;
+                      },
                     ),
                   ),
                 ),
@@ -71,7 +74,6 @@ class LoginScreenState extends State<LoginScreen> {
                     child: TextField(
                       autofocus: false,
                       obscureText: true,
-
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.grey,
@@ -91,6 +93,9 @@ class LoginScreenState extends State<LoginScreen> {
                           backgroundColor: Colors.transparent,
                         ),
                       ),
+                      onChanged: (text) {
+                        passwordText = text;
+                      },
                     ),
                   ),
                 ),
@@ -127,7 +132,8 @@ class LoginScreenState extends State<LoginScreen> {
                     child: SizedBox(
                       width: double.infinity, // match_parent
                       height: 50.0,
-                      child: _buildLoginButton(isCheckBoxChecked, context),
+                      child: _buildLoginButton(isCheckBoxChecked, context,
+                          emailText, passwordText),
                     )),
                 Center(
                   child: Container(
@@ -155,13 +161,13 @@ class LoginScreenState extends State<LoginScreen> {
   }
 }
 
-Widget _buildLoginButton(bool isCheckBoxChecked, BuildContext context) {
+Widget _buildLoginButton(bool isCheckBoxChecked, BuildContext context,
+    String emailText, String passwordText) {
   return IgnorePointer(
     ignoring: !isCheckBoxChecked,
     child: RaisedButton(
       onPressed: () {
         if (isCheckBoxChecked) {
-          _displayToast("I was clicked");
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => HomeScreen(emailText, passwordText)));
         }
